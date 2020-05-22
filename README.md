@@ -10,6 +10,6 @@ Current Features:
 3. Mark Green and Red for people following social distancing.
 
 
-To DO:
- Add birdview projection.
- Add support for GPU
+To Do:
+ 1.Add birdview projection.
+ 2.Add support for GPU
