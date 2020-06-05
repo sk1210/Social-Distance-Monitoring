@@ -43,7 +43,7 @@ def get_bounding_box(outs, height, width):
 
 def main():
     # load yolov2
-    net = cv2.dnn.readNet("yolov3.weights", "yolov2.cfg")
+    net = cv2.dnn.readNet("yolov2.weights", "yolov2.cfg")
     layer_names = net.getLayerNames()
     output_layers = [layer_names[i[0] - 1] for i in net.getUnconnectedOutLayers()]
 
