@@ -49,3 +49,43 @@ M3 = np.array([
 circle_img = np.zeros((100, 100, 3))
 cv2.circle(circle_img, (50, 50), 40, (0, 240, 0), 4)
 dst_circle = cv2.warpPerspective(circle_img, M3, (100, 100))
+
+
+#########
+# check if two circles intersects
+def int_circle(x1, y1, x2, y2, r1, r2):
+    distSq = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)
+    radSumSq = (r1 + r2) * (r1 + r2)
+    if distSq == radSumSq:
+        return 1
+    elif distSq > radSumSq:
+        return -1
+    else:
+        return 0
+
+
+def get_bounding_box(outs, height, width):
+    # Showing informations on the screen
+    class_ids = []
+    confidences = []
+    boxes = []
+    for out in outs:
+        for detection in out:
+            scores = detection[5:]
+            class_id = np.argmax(scores)
+            if class_id != 0: continue  # 0 is ID of persons
+            confidence = scores[class_id]
+            if confidence > 0.3:
+                # Object detected
+                center_x = int(detection[0] * width)
+                center_y = int(detection[1] * height)
+                w = int(detection[2] * width)
+                h = int(detection[3] * height)
+                # Rectangle coordinates
+                x = int(center_x - w / 2)
+                y = int(center_y - h / 2)
+                boxes.append([x, y, w, h])
+                confidences.append(float(confidence))
+                class_ids.append(class_id)
+
+    return boxes, confidences, class_ids
